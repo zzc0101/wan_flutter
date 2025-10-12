@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wan_flutter/pages/auth/login_page.dart';
+import 'package:wan_flutter/pages/auth/register_page.dart';
 import 'package:wan_flutter/pages/tab_page.dart';
 import 'package:wan_flutter/pages/web_view_page.dart';
 
@@ -8,9 +10,13 @@ class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RoutePath.tab:
-        return pageRoute(TabPage());
+        return pageRoute(TabPage(), settings: settings);
       case RoutePath.webViewPage:
-        return pageRoute(WebViewPage(title: "首页跳转测试"));
+        return pageRoute(WebViewPage(title: "首页跳转测试"), settings: settings);
+      case RoutePath.loginPage:
+        return pageRoute(LoginPage(), settings: settings);
+      case RoutePath.registerPage:
+        return pageRoute(RegisterPage(), settings: settings);
     }
     return pageRoute(
       Scaffold(
@@ -45,4 +51,10 @@ class RoutePath {
 
   // 网页页面
   static const String webViewPage = "/web_view_page";
+
+  // 登录页面
+  static const String loginPage = "/login_page";
+
+  // 注册页面
+  static const String registerPage = "/register_page";
 }
