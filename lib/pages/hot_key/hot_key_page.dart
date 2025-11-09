@@ -33,79 +33,74 @@ class _TabPageState extends State<HotKeyPage> {
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Expanded(
-              child: Column(
-                children: [
-                  // 标题
-                  Container(
-                    height: 45.h,
-                    alignment: Alignment.centerLeft,
-                    decoration: BoxDecoration(
-                      border: Border(
-                        top: BorderSide(width: 0.5.r, color: Colors.grey),
-                        bottom: BorderSide(width: 0.5.r, color: Colors.grey),
+            child: Column(
+              children: [
+                // 标题
+                Container(
+                  height: 45.h,
+                  alignment: Alignment.centerLeft,
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(width: 0.5.r, color: Colors.grey),
+                      bottom: BorderSide(width: 0.5.r, color: Colors.grey),
+                    ),
+                  ),
+                  padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                  child: Row(
+                    children: [
+                      Text(
+                        "搜索热词",
+                        style: TextStyle(fontSize: 14.sp, color: Colors.black),
                       ),
-                    ),
-                    padding: EdgeInsets.only(left: 20.w, right: 20.w),
-                    child: Row(
-                      children: [
-                        Text(
-                          "搜索热词",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Expanded(child: SizedBox()),
-                        Image.asset(
-                          "assets/images/icon_search.png",
-                          width: 30.r,
-                          height: 30.r,
-                        ),
-                      ],
-                    ),
-                  ),
-                  // 搜索热词列表
-                  Consumer<HotKeyViewModel>(
-                    builder: (context, vm, child) {
-                      return _gridView(
-                        false,
-                        keyList: vm.keyList,
-                        itemTap: (value) {},
-                      );
-                    },
-                  ),
-                  // 标题
-                  Container(
-                    height: 45.h,
-                    alignment: Alignment.centerLeft,
-                    decoration: BoxDecoration(
-                      border: Border(
-                        top: BorderSide(width: 0.5.r, color: Colors.grey),
-                        bottom: BorderSide(width: 0.5.r, color: Colors.grey),
+                      Expanded(child: SizedBox()),
+                      Image.asset(
+                        "assets/images/icon_search.png",
+                        width: 30.r,
+                        height: 30.r,
                       ),
-                    ),
-                    margin: EdgeInsets.only(top: 20.h),
-                    padding: EdgeInsets.only(left: 20.w, right: 20.w),
-                    child: Text(
-                      "常用网站",
-                      style: TextStyle(fontSize: 14.sp, color: Colors.black),
+                    ],
+                  ),
+                ),
+                // 搜索热词列表
+                Consumer<HotKeyViewModel>(
+                  builder: (context, vm, child) {
+                    return _gridView(
+                      false,
+                      keyList: vm.keyList,
+                      itemTap: (value) {},
+                    );
+                  },
+                ),
+                // 标题
+                Container(
+                  height: 45.h,
+                  alignment: Alignment.centerLeft,
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(width: 0.5.r, color: Colors.grey),
+                      bottom: BorderSide(width: 0.5.r, color: Colors.grey),
                     ),
                   ),
-                  // 常用网站列表信息
-                  Consumer<HotKeyViewModel>(
-                    builder: (context, vm, child) {
-                      return _gridView(
-                        true,
-                        websiteList: vm.websiteList,
-                        itemTap: (value) {
-                          RouteUtils.push(context, WebViewPage(title: "常用网站列表"));
-                        },
-                      );
-                    },
+                  margin: EdgeInsets.only(top: 20.h),
+                  padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                  child: Text(
+                    "常用网站",
+                    style: TextStyle(fontSize: 14.sp, color: Colors.black),
                   ),
-                ],
-              ),
+                ),
+                // 常用网站列表信息
+                Consumer<HotKeyViewModel>(
+                  builder: (context, vm, child) {
+                    return _gridView(
+                      true,
+                      websiteList: vm.websiteList,
+                      itemTap: (value) {
+                        RouteUtils.push(context, WebViewPage(title: "常用网站列表"));
+                      },
+                    );
+                  },
+                ),
+              ],
             ),
           ),
         ),

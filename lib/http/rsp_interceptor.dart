@@ -16,15 +16,26 @@ class ResponseInterceptor extends Interceptor {
             handler.next(
               Response(requestOptions: response.requestOptions, data: ""),
             );
-          } else if (rsp.errorCode == -1001) {
-            // 需要登录
-            handler.reject(
-              DioException(
-                requestOptions: response.requestOptions,
-                message: "未登录",
-              ),
+          } else {
+            handler.next(
+              Response(requestOptions: response.requestOptions, data: rsp.data),
             );
-            showToast("请先登录");
+          }
+        } else if (rsp.errorCode == -1001) {
+          // 需要登录
+          handler.reject(
+            DioException(
+              requestOptions: response.requestOptions,
+              message: "未登录",
+            ),
+          );
+          showToast("请先登录");
+        } else if (rsp.errorCode == -1) {
+          showToast(rsp.errorMsg ?? "");
+          if (rsp.data == null) {
+            handler.next(
+              Response(requestOptions: response.requestOptions, data: true),
+            );
           } else {
             handler.next(
               Response(requestOptions: response.requestOptions, data: rsp.data),

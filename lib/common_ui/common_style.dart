@@ -8,8 +8,10 @@ Widget commonInput({
   String? labelText,
   TextEditingController? controller,
   ValueChanged<String>? onChanged,
+  bool? obscureText
 }) {
   return TextField(
+    obscureText: obscureText ?? false,
     controller: controller,
     onChanged: onChanged,
     style: TextStyle(color: Colors.white, fontSize: 14.sp),

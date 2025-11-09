@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:wan_flutter/http/dio_instance.dart';
+import 'package:wan_flutter/repository/datas/auth_data.dart';
 import 'package:wan_flutter/repository/datas/common_website_data.dart';
 import 'package:wan_flutter/repository/datas/home_banner_data.dart';
 import 'package:wan_flutter/repository/datas/home_list_data.dart';
@@ -38,19 +39,43 @@ class Api {
 
   /// 获取常用网站
   Future<List<CommonWebsiteData>?> getWebsiteList() async {
-    Response response = await DioInstance.instance().get(
-      path: 'friend/json',
-    );
-    CommonWebsiteListData commonWebsiteListData = CommonWebsiteListData.fromJson(response.data);
+    Response response = await DioInstance.instance().get(path: 'friend/json');
+    CommonWebsiteListData commonWebsiteListData =
+        CommonWebsiteListData.fromJson(response.data);
     return commonWebsiteListData.websiteList;
   }
 
   /// 获取搜素热点
   Future<List<SearchHotKeysData>?> getSearchHotKeys() async {
-    Response response = await DioInstance.instance().get(
-      path: 'hotkey/json',
-    );
-    SearchHotKeysListData searchHotKeysListData = SearchHotKeysListData.fromJson(response.data);
+    Response response = await DioInstance.instance().get(path: 'hotkey/json');
+    SearchHotKeysListData searchHotKeysListData =
+        SearchHotKeysListData.fromJson(response.data);
     return searchHotKeysListData.keyList;
+  }
+
+  /// 注册
+  Future<dynamic> register({
+    String? name,
+    String? password,
+    String? rePassword,
+  }) async {
+    Response response = await DioInstance.instance().post(
+      path: 'user/register',
+      queryParameters: {
+        "username": name,
+        "password": password,
+        "repassword": rePassword,
+      },
+    );
+    return response.data;
+  }
+
+  /// 登录
+  Future<AuthData> login({String? name, String? password}) async {
+    Response response = await DioInstance.instance().post(
+      path: 'user/login',
+      queryParameters: {"username": name, "password": password},
+    );
+    return AuthData.fromJson(response.data);
   }
 }
