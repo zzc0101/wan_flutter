@@ -3,6 +3,8 @@ import 'package:wan_flutter/http/http_method.dart';
 import 'package:wan_flutter/http/print_log_interceptor.dart';
 import 'package:wan_flutter/http/rsp_interceptor.dart';
 
+import 'cookie_interceptor.dart';
+
 class DioInstance {
   static DioInstance? _instance;
 
@@ -31,6 +33,8 @@ class DioInstance {
       receiveTimeout: receiveTimeout ?? _defaultTime,
       sendTimeout: sendTimeout ?? _defaultTime,
     );
+    // 添加Cookie拦截器
+    _dio.interceptors.add(CookieInterceptor());
     // 添加打印请求返回信息拦截器
     _dio.interceptors.add(PrintLogInterceptor());
     // 添加统一返回值处理拦截器
@@ -66,7 +70,7 @@ class DioInstance {
     Options? options,
     CancelToken? cancelToken,
   }) async {
-    return await _dio.get(
+    return await _dio.post(
       path,
       queryParameters: queryParameters,
       options:
