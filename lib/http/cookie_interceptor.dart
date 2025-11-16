@@ -9,8 +9,8 @@ class CookieInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     // 取出本地Cookie
     SpUtils.getList(Constants.SP_COOKIE_LIST).then((cookieList) {
-      // 塞到请求头中
-      options.headers[HttpHeaders.setCookieHeader] = cookieList;
+      // 塞到请求头中 cookieHeader
+      options.headers[HttpHeaders.cookieHeader] = cookieList;
       // 继续往下执行
       handler.next(options);
     });

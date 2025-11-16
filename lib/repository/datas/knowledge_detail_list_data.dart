@@ -1,12 +1,14 @@
-class HomeListData {
-  HomeListData({
-      num? curPage, 
-      List<HomeListItemData>? datas,
-      num? offset, 
-      bool? over, 
-      num? pageCount, 
-      num? size, 
-      num? total,}){
+// 知识体系明细数据
+class KnowledgeDetailListData {
+  KnowledgeDetailListData({
+    num? curPage,
+    List<KnowledgeDetailItemData>? datas,
+    num? offset,
+    bool? over,
+    num? pageCount,
+    num? size,
+    num? total,
+  }) {
     _curPage = curPage;
     _datas = datas;
     _offset = offset;
@@ -14,14 +16,14 @@ class HomeListData {
     _pageCount = pageCount;
     _size = size;
     _total = total;
-}
+  }
 
-  HomeListData.fromJson(dynamic json) {
+  KnowledgeDetailListData.fromJson(dynamic json) {
     _curPage = json['curPage'];
     if (json['datas'] != null) {
       _datas = [];
       json['datas'].forEach((v) {
-        _datas?.add(HomeListItemData.fromJson(v));
+        _datas?.add(KnowledgeDetailItemData.fromJson(v));
       });
     }
     _offset = json['offset'];
@@ -30,8 +32,9 @@ class HomeListData {
     _size = json['size'];
     _total = json['total'];
   }
+
   num? _curPage;
-  List<HomeListItemData>? _datas;
+  List<KnowledgeDetailItemData>? _datas;
   num? _offset;
   bool? _over;
   num? _pageCount;
@@ -39,11 +42,17 @@ class HomeListData {
   num? _total;
 
   num? get curPage => _curPage;
-  List<HomeListItemData>? get datas => _datas;
+
+  List<KnowledgeDetailItemData>? get datas => _datas;
+
   num? get offset => _offset;
+
   bool? get over => _over;
+
   num? get pageCount => _pageCount;
+
   num? get size => _size;
+
   num? get total => _total;
 
   Map<String, dynamic> toJson() {
@@ -59,61 +68,46 @@ class HomeListData {
     map['total'] = _total;
     return map;
   }
-
 }
 
-// 首页置顶数据
-class HomeTopListData {
-  List<HomeListItemData>? topList;
-
-  HomeTopListData.fromJson(dynamic json) {
-    if (json is List) {
-      topList = [];
-      for (var element in json) {
-        topList?.add(HomeListItemData.fromJson(element));
-      }
-    }
-  }
-}
-
-class HomeListItemData {
-  HomeListItemData({
-      bool? adminAdd, 
-      String? apkLink, 
-      num? audit, 
-      String? author, 
-      bool? canEdit, 
-      num? chapterId, 
-      String? chapterName, 
-      bool? collect, 
-      num? courseId, 
-      String? desc, 
-      String? descMd, 
-      String? envelopePic, 
-      bool? fresh, 
-      String? host, 
-      num? id, 
-      bool? isAdminAdd, 
-      String? link, 
-      String? niceDate, 
-      String? niceShareDate, 
-      String? origin, 
-      String? prefix, 
-      String? projectLink, 
-      num? publishTime, 
-      num? realSuperChapterId, 
-      num? selfVisible, 
-      num? shareDate, 
-      String? shareUser, 
-      num? superChapterId, 
-      String? superChapterName, 
-      List<dynamic>? tags, 
-      String? title,
-      // 0：非置顶数据，1：置顶数据
-      num? type, 
-      num? userId, 
-      num? visible, 
-      num? zan,}){
+class KnowledgeDetailItemData {
+  KnowledgeDetailItemData({
+    bool? adminAdd,
+    String? apkLink,
+    num? audit,
+    String? author,
+    bool? canEdit,
+    num? chapterId,
+    String? chapterName,
+    bool? collect,
+    num? courseId,
+    String? desc,
+    String? descMd,
+    String? envelopePic,
+    bool? fresh,
+    String? host,
+    num? id,
+    bool? isAdminAdd,
+    String? link,
+    String? niceDate,
+    String? niceShareDate,
+    String? origin,
+    String? prefix,
+    String? projectLink,
+    num? publishTime,
+    num? realSuperChapterId,
+    num? selfVisible,
+    num? shareDate,
+    String? shareUser,
+    num? superChapterId,
+    String? superChapterName,
+    List<dynamic>? tags,
+    String? title,
+    num? type,
+    num? userId,
+    num? visible,
+    num? zan,
+  }) {
     _adminAdd = adminAdd;
     _apkLink = apkLink;
     _audit = audit;
@@ -149,9 +143,9 @@ class HomeListItemData {
     _userId = userId;
     _visible = visible;
     _zan = zan;
-}
+  }
 
-  HomeListItemData.fromJson(dynamic json) {
+  KnowledgeDetailItemData.fromJson(dynamic json) {
     _adminAdd = json['adminAdd'];
     _apkLink = json['apkLink'];
     _audit = json['audit'];
@@ -193,6 +187,7 @@ class HomeListItemData {
     _visible = json['visible'];
     _zan = json['zan'];
   }
+
   bool? _adminAdd;
   String? _apkLink;
   num? _audit;
@@ -230,40 +225,73 @@ class HomeListItemData {
   num? _zan;
 
   bool? get adminAdd => _adminAdd;
+
   String? get apkLink => _apkLink;
+
   num? get audit => _audit;
+
   String? get author => _author;
+
   bool? get canEdit => _canEdit;
+
   num? get chapterId => _chapterId;
+
   String? get chapterName => _chapterName;
+
   bool? get collect => _collect;
-  set collect(bool? value) => _collect = value;  // 添加 setter 方法
+
   num? get courseId => _courseId;
+
   String? get desc => _desc;
+
   String? get descMd => _descMd;
+
   String? get envelopePic => _envelopePic;
+
   bool? get fresh => _fresh;
+
   String? get host => _host;
+
   num? get id => _id;
+
   bool? get isAdminAdd => _isAdminAdd;
+
   String? get link => _link;
+
   String? get niceDate => _niceDate;
+
   String? get niceShareDate => _niceShareDate;
+
   String? get origin => _origin;
+
   String? get prefix => _prefix;
+
   String? get projectLink => _projectLink;
+
   num? get publishTime => _publishTime;
+
   num? get realSuperChapterId => _realSuperChapterId;
+
   num? get selfVisible => _selfVisible;
+
   num? get shareDate => _shareDate;
+
   String? get shareUser => _shareUser;
+
   num? get superChapterId => _superChapterId;
+
   String? get superChapterName => _superChapterName;
+
   List<dynamic>? get tags => _tags;
+
   String? get title => _title;
+
   num? get type => _type;
+
   num? get userId => _userId;
+
   num? get visible => _visible;
+
   num? get zan => _zan;
 
   Map<String, dynamic> toJson() {
@@ -307,5 +335,4 @@ class HomeListItemData {
     map['zan'] = _zan;
     return map;
   }
-
 }

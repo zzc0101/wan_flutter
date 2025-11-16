@@ -1,14 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wan_flutter/pages/auth/register_page.dart';
-import 'package:wan_flutter/route/route_utils.dart';
 
+// 标题文本15号
+TextStyle titleTextStyle15 = TextStyle(color: Colors.black, fontSize: 15.sp);
+
+// 普通字体，只做判空处理
+Text normalText(String? text) {
+  return Text(text ?? "", style: titleTextStyle15);
+}
+
+// 通用的输入框
 Widget commonInput({
   String? labelText,
   TextEditingController? controller,
   ValueChanged<String>? onChanged,
-  bool? obscureText
+  bool? obscureText,
 }) {
   return TextField(
     obscureText: obscureText ?? false,

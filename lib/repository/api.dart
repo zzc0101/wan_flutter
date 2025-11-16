@@ -4,6 +4,9 @@ import 'package:wan_flutter/repository/datas/auth_data.dart';
 import 'package:wan_flutter/repository/datas/common_website_data.dart';
 import 'package:wan_flutter/repository/datas/home_banner_data.dart';
 import 'package:wan_flutter/repository/datas/home_list_data.dart';
+import 'package:wan_flutter/repository/datas/knowledge_detail_list_data.dart';
+import 'package:wan_flutter/repository/datas/konwledge_list.dart';
+import 'package:wan_flutter/repository/datas/search_data.dart';
 import 'package:wan_flutter/repository/datas/search_hot_keys_data.dart';
 
 class Api {
@@ -77,5 +80,69 @@ class Api {
       queryParameters: {"username": name, "password": password},
     );
     return AuthData.fromJson(response.data);
+  }
+
+  // 获取体系数据
+  Future<List<KnowledgeListData?>> knowledgeList() async {
+    Response response = await DioInstance.instance().get(path: "tree/json");
+    KnowledgeData knowledgeData = KnowledgeData.fromJson(response.data);
+    return knowledgeData.list;
+  }
+
+  // 获取收藏数据
+  Future<bool?> collect(String? id) async {
+    Response response = await DioInstance.instance().post(
+      path: "lg/collect/${id}/json",
+    );
+    if (response.data != null && response.data is bool) {
+      return response.data;
+    }
+    return true;
+  }
+
+  // 取消收藏
+  Future<bool?> unCollect(String? id) async {
+    Response response = await DioInstance.instance().post(
+      path: "lg/uncollect_originId/${id}/json",
+    );
+    return boolCallback(response.data);
+  }
+
+  // 退出登录
+  Future<bool?> logout() async {
+    Response response = await DioInstance.instance().get(
+      path: "user/logout/json",
+    );
+    return true;
+  }
+
+  // 知识体系明细数据
+  Future<List<KnowledgeDetailItemData>?> detailKnowledgeList(
+    String? pageCount,
+    String? cid,
+  ) async {
+    Response response = await DioInstance.instance().get(
+      path: "article/list/$pageCount/json",
+      param: {"cid": cid},
+    );
+    var knowledgeDetailData = KnowledgeDetailListData.fromJson(response.data);
+    return knowledgeDetailData.datas;
+  }
+
+  // 搜索数据
+  Future<List<SearchListData>?> searchList(String? keyword) async {
+    Response response = await DioInstance.instance().post(
+      path: "article/query/0/json",
+      queryParameters: {"k": keyword},
+    );
+    var searchData = SearchData.fromJson(response.data);
+    return searchData.datas;
+  }
+
+  bool? boolCallback(dynamic data) {
+    if (data != null && data is bool) {
+      return data;
+    }
+    return false;
   }
 }

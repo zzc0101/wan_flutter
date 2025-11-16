@@ -34,7 +34,7 @@ class _TabPageState extends State<TabPage> {
   void initTabData() {
     pages = [HomePage(), HotKeyPage(), KnowledgePage(), PersonalPage()];
 
-    lables = ['首页', '热点', '知识库', '我的'];
+    lables = ['首页', '热点', '体系', '我的'];
 
     icons = [
       Image.asset(

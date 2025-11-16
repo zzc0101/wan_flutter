@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:wan_flutter/pages/hot_key/hot_key_vm.dart';
+import 'package:wan_flutter/pages/search/search_page.dart';
 import 'package:wan_flutter/pages/web_view_page.dart';
 import 'package:wan_flutter/repository/datas/common_website_data.dart';
 import 'package:wan_flutter/repository/datas/search_hot_keys_data.dart';
 import 'package:wan_flutter/route/route_utils.dart';
+import 'package:wan_flutter/route/routest.dart';
 
 class HotKeyPage extends StatefulWidget {
   @override
@@ -52,11 +54,17 @@ class _TabPageState extends State<HotKeyPage> {
                         "搜索热词",
                         style: TextStyle(fontSize: 14.sp, color: Colors.black),
                       ),
-                      Expanded(child: SizedBox()),
-                      Image.asset(
-                        "assets/images/icon_search.png",
-                        width: 30.r,
-                        height: 30.r,
+                      const Expanded(child: SizedBox()),
+                      GestureDetector(
+                        onTap: () {
+                          // 进入搜索页面
+                          RouteUtils.push(context, const SearchPage());
+                        },
+                        child: Image.asset(
+                          "assets/images/icon_search.png",
+                          width: 30.r,
+                          height: 30.r,
+                        ),
                       ),
                     ],
                   ),
@@ -67,7 +75,11 @@ class _TabPageState extends State<HotKeyPage> {
                     return _gridView(
                       false,
                       keyList: vm.keyList,
-                      itemTap: (value) {},
+                      itemTap: (value) {
+                        // RouteUtils.pushForNamed(context, RoutePath.searchPage);
+                        // 进入搜索页面
+                        RouteUtils.push(context, SearchPage(keyword: value));
+                      },
                     );
                   },
                 ),

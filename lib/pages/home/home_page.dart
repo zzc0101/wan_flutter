@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
+import 'package:wan_flutter/common_ui/loading.dart';
 import 'package:wan_flutter/common_ui/smart_refresh/smart_refresh_widget.dart';
 import 'package:wan_flutter/pages/home/home_vm.dart';
 import 'package:wan_flutter/repository/datas/home_list_data.dart';
@@ -24,19 +25,24 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    Loading.showLoading();
     homeViewModel.getBanner();
-    homeViewModel.initListData(false);
+    refreshOrLoad(false);
   }
 
-void refreshOrLoad(bool loadMore) {
-    homeViewModel.initListData(loadMore, callback: (loadMore) {
-      if(loadMore) {
-        refreshController.loadComplete();
-      } else {
-        refreshController.refreshCompleted();
-      }
-    });
-}
+  void refreshOrLoad(bool loadMore) {
+    homeViewModel.initListData(
+      loadMore,
+      callback: (loadMore) {
+        if (loadMore) {
+          refreshController.loadComplete();
+        } else {
+          refreshController.refreshCompleted();
+        }
+        Loading.dismissAll();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +81,7 @@ void refreshOrLoad(bool loadMore) {
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            return _listItemView(vm.listData?[index]);
+            return _listItemView(vm.listData?[index], index);
           },
           itemCount: vm.listData?.length ?? 0,
         );
@@ -112,7 +118,7 @@ void refreshOrLoad(bool loadMore) {
     );
   }
 
-  Widget _listItemView(HomeListItemData? item) {
+  Widget _listItemView(HomeListItemData? item, int index) {
     // 点击事件有两种实现方式： 1、 GestureDetector 2、InkWell()
     return GestureDetector(
       onTap: () {
@@ -195,10 +201,23 @@ void refreshOrLoad(bool loadMore) {
                   style: TextStyle(color: Colors.green, fontSize: 12.sp),
                 ),
                 Expanded(child: SizedBox()),
-                Image.asset(
-                  'assets/images/img_collect_grey.png',
-                  width: 30.r,
-                  height: 30.r,
+                GestureDetector(
+                  onTap: () {
+                    var isCollect;
+                    if (item?.collect == true) {
+                      isCollect = false;
+                    } else {
+                      isCollect = true;
+                    }
+                    homeViewModel.collect(isCollect, "${item?.id}", index);
+                  },
+                  child: Image.asset(
+                    item?.collect == true
+                        ? 'assets/images/img_collect.png'
+                        : 'assets/images/img_collect_grey.png',
+                    width: 30.r,
+                    height: 30.r,
+                  ),
                 ),
               ],
             ),

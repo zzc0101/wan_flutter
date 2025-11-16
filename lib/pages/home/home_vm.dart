@@ -64,4 +64,17 @@ class HomeViewModel with ChangeNotifier {
     List<HomeListItemData>? list = await Api.instance.getHomeTopList();
     return list;
   }
+
+  Future collect(bool isCollect, String? id, int index) async {
+    bool? success;
+    if(isCollect) {
+      success = await Api.instance.collect(id);
+    } else {
+      success = await Api.instance.unCollect(id);
+    }
+    if(success == true) {
+      listData?[index].collect = isCollect;
+      notifyListeners();
+    }
+  }
 }

@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wan_flutter/pages/auth/login_page.dart';
 import 'package:wan_flutter/pages/auth/register_page.dart';
+import 'package:wan_flutter/pages/knowledge/detail/knowledge_detail_tab_page.dart';
+import 'package:wan_flutter/pages/search/search_page.dart';
 import 'package:wan_flutter/pages/tab_page.dart';
 import 'package:wan_flutter/pages/web_view_page.dart';
 
@@ -17,6 +19,10 @@ class Routes {
         return pageRoute(LoginPage(), settings: settings);
       case RoutePath.registerPage:
         return pageRoute(RegisterPage(), settings: settings);
+      case RoutePath.detailKnowledgePage:
+        return pageRoute(KnowledgeDetailTabPage(), settings: settings);
+      case RoutePath.searchPage:
+        return pageRoute(SearchPage(), settings: settings);
     }
     return pageRoute(
       Scaffold(
@@ -57,4 +63,10 @@ class RoutePath {
 
   // 注册页面
   static const String registerPage = "/register_page";
+
+  // 知识详情页
+  static const String detailKnowledgePage = "/detail_knowledge_page";
+
+  // 搜索页
+  static const String searchPage = "/search_page";
 }
