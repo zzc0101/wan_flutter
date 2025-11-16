@@ -1,11 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:wan_flutter/http/dio_instance.dart';
+import 'package:wan_flutter/repository/datas/app_check_update_model.dart';
 import 'package:wan_flutter/repository/datas/auth_data.dart';
 import 'package:wan_flutter/repository/datas/common_website_data.dart';
 import 'package:wan_flutter/repository/datas/home_banner_data.dart';
 import 'package:wan_flutter/repository/datas/home_list_data.dart';
 import 'package:wan_flutter/repository/datas/knowledge_detail_list_data.dart';
 import 'package:wan_flutter/repository/datas/konwledge_list.dart';
+import 'package:wan_flutter/repository/datas/my_collects_model.dart';
 import 'package:wan_flutter/repository/datas/search_data.dart';
 import 'package:wan_flutter/repository/datas/search_hot_keys_data.dart';
 
@@ -137,6 +139,38 @@ class Api {
     );
     var searchData = SearchData.fromJson(response.data);
     return searchData.datas;
+  }
+
+  // 获取我的收藏列表
+  Future<List<MyCollectItemModel>?> getMyCollects(String pageCount) async {
+    Response response = await DioInstance.instance().get(
+      path: "lg/collect/list/$pageCount/json",
+    );
+    MyCollectsModel? model = MyCollectsModel.fromJson(response.data);
+    if (model.datas != null && model.datas?.isNotEmpty == true) {
+      return model.datas;
+    }
+    return [];
+  }
+
+  // 取消收藏
+  Future<bool> cancelCollect(String id) async {
+    Response response = await DioInstance.instance().post(
+      path: "lg/uncollect_originId/$id/json",
+    );
+    if (response.data != null && response.data == true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // 检查APP新版本
+  Future<AppCheckUpdateModel?> checkUpdate() async {
+    DioInstance.instance().changeBaseUrl("分发接口");
+    Response response = await DioInstance.instance().post(path: "");
+    DioInstance.instance().changeBaseUrl("平台接口");
+    return AppCheckUpdateModel.fromJson(response.data);
   }
 
   bool? boolCallback(dynamic data) {

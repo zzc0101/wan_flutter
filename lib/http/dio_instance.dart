@@ -83,4 +83,9 @@ class DioInstance {
       cancelToken: cancelToken,
     );
   }
+
+  void changeBaseUrl(String baseUrl) {
+    _dio.options.baseUrl = baseUrl;
+  }
+
 }

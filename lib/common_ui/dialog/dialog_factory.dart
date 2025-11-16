@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wan_android_flutter/common_ui/dialog/parent_dialog.dart';
+import 'package:wan_flutter/common_ui/dialog/parent_dialog.dart';
 
 ///通用弹窗工具类
 class DialogFactory {

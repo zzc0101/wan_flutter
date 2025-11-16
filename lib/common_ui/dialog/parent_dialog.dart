@@ -134,7 +134,7 @@ enum DialogContentType {
   RichText,
   //没有标题只有内容样式
   NormalNoTitle,
-  //没有标题内容是富文本样式
+  //富文本内容无标题
   RichTextNoTitle
 }
 

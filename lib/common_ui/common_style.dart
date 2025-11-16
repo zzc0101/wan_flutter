@@ -71,3 +71,16 @@ Widget registerButton(GestureTapCallback? onTap) {
     ),
   );
 }
+
+//收藏按钮
+Widget collectImage(bool? collect, {GestureTapCallback? onTap}) {
+  return GestureDetector(
+      onTap: onTap,
+      child: Image.asset(
+          collect == true
+              ? "assets/images/img_collect"
+              ".png"
+              : "assets/images/img_collect_grey.png",
+          width: 25.r,
+          height: 25.r));
+}

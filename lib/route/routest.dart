@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wan_flutter/common_ui/web/webview_page.dart';
 import 'package:wan_flutter/common_ui/web/webview_widget.dart';
+import 'package:wan_flutter/pages/about/about_us_page.dart';
 import 'package:wan_flutter/pages/auth/login_page.dart';
 import 'package:wan_flutter/pages/auth/register_page.dart';
 import 'package:wan_flutter/pages/knowledge/detail/knowledge_detail_tab_page.dart';
+import 'package:wan_flutter/pages/my_collects/my_collects_page.dart';
 import 'package:wan_flutter/pages/search/search_page.dart';
 import 'package:wan_flutter/pages/tab_page.dart';
 
@@ -15,7 +17,10 @@ class Routes {
       case RoutePath.tab:
         return pageRoute(TabPage(), settings: settings);
       case RoutePath.webViewPage:
-        return pageRoute(WebViewPage(loadResource: "", webViewType: WebViewType.URL,), settings: settings);
+        return pageRoute(
+          WebViewPage(loadResource: "", webViewType: WebViewType.URL),
+          settings: settings,
+        );
       case RoutePath.loginPage:
         return pageRoute(LoginPage(), settings: settings);
       case RoutePath.registerPage:
@@ -24,16 +29,20 @@ class Routes {
         return pageRoute(KnowledgeDetailTabPage(), settings: settings);
       case RoutePath.searchPage:
         return pageRoute(SearchPage(), settings: settings);
+      case RoutePath.myCollectsPage:
+        return pageRoute(MyCollectsPage(), settings: settings);
+      case RoutePath.about:
+        return pageRoute(AboutUsPage(), settings: settings);
     }
     return pageRoute(
       Scaffold(
-        body: SafeArea(child: Center(child: Text("路由： ${settings.name} 不存在"))),
+        body: SafeArea(
+            child: Center(child: Text("路由： ${settings.name} 不存在"))),
       ),
     );
   }
 
-  static MaterialPageRoute pageRoute(
-    Widget page, {
+  static MaterialPageRoute pageRoute(Widget page, {
     RouteSettings? settings,
     bool? fullscreenDialog,
     bool? maintainState,
@@ -70,4 +79,10 @@ class RoutePath {
 
   // 搜索页
   static const String searchPage = "/search_page";
+
+  // 我的收藏列表页面
+  static const String myCollectsPage = "/my_collects_page";
+
+  // 关于我们
+  static const String about = "/about";
 }

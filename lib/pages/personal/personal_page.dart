@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:wan_flutter/pages/about/about_us_page.dart';
 import 'package:wan_flutter/pages/auth/login_page.dart';
+import 'package:wan_flutter/pages/my_collects/my_collects_page.dart';
 import 'package:wan_flutter/pages/personal/personal_vm.dart';
 import 'package:wan_flutter/route/route_utils.dart';
 
@@ -37,9 +39,16 @@ class _PersonalPageState extends State<PersonalPage> {
                   RouteUtils.push(context, LoginPage());
                 }
               }),
-              _settingsItem("我的收藏", () {}),
-              _settingsItem("检查更新", () {}),
-              _settingsItem("关于我们", () {}),
+              _settingsItem("我的收藏", () {
+                RouteUtils.push(context, MyCollectsPage());
+              }),
+              _settingsItem("检查更新", () {
+                // 网络请求获取包的信息
+                // 对包的版本与当前版本进行比较
+              }),
+              _settingsItem("关于我们", () {
+                RouteUtils.push(context, AboutUsPage());
+              }),
               Consumer<PersonViewModel>(
                 builder: (context, vm, child) {
                   if (vm.shouldLogin) {

@@ -1,9 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:wan_android_flutter/repository/api/wan_api.dart';
-
-import '../../repository/model/my_collects_model.dart';
+import 'package:wan_flutter/repository/api.dart';
+import 'package:wan_flutter/repository/datas/my_collects_model.dart';
 
 //我的收藏页面逻辑层
 class MyCollectsViewModel with ChangeNotifier {
@@ -18,7 +17,7 @@ class MyCollectsViewModel with ChangeNotifier {
       _pageCount = 0;
       dataList?.clear();
     }
-    var list = await WanApi.instance().getMyCollects("$_pageCount");
+    var list = await Api.instance.getMyCollects("$_pageCount");
     if (list != null && list.isNotEmpty == true) {
       dataList?.addAll(list);
       notifyListeners();
@@ -31,7 +30,7 @@ class MyCollectsViewModel with ChangeNotifier {
 
   ///取消收藏文章
   Future cancelCollect(int index, String? id) async {
-    bool success = await WanApi.instance().cancelCollect(id ?? "");
+    bool success = await Api.instance.cancelCollect(id ?? "");
     if (success) {
       try {
         dataList?.remove(dataList?[index]);
