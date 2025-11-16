@@ -5,8 +5,11 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:wan_flutter/common_ui/common_style.dart';
 import 'package:wan_flutter/common_ui/smart_refresh/smart_refresh_widget.dart';
+import 'package:wan_flutter/common_ui/web/webview_page.dart';
+import 'package:wan_flutter/common_ui/web/webview_widget.dart';
 import 'package:wan_flutter/pages/knowledge/detail/knowledge_detail_vm.dart';
 import 'package:wan_flutter/repository/datas/knowledge_detail_list_data.dart';
+import 'package:wan_flutter/route/route_utils.dart';
 
 class KnowledgeTabChildPage extends StatefulWidget {
   const KnowledgeTabChildPage({super.key, this.cid});
@@ -57,9 +60,23 @@ class _KnowledgeTabChildPageState extends State<KnowledgeTabChildPage> {
                 refreshOrLoad(true);
               },
               child: ListView.builder(
-                itemCount: vm.detailList?.length ?? 0,
+                itemCount: vm.detailList.length ?? 0,
                 itemBuilder: (context, index) {
-                  return _item(vm.detailList?[index], onTap: () {});
+                  var item = vm.detailList[index];
+                  return _item(
+                    item,
+                    onTap: () {
+                      RouteUtils.push(
+                        context,
+                        WebViewPage(
+                          loadResource: item.link ?? "",
+                          webViewType: WebViewType.URL,
+                          showTitle: true,
+                          title: item.title ?? "",
+                        ),
+                      );
+                    },
+                  );
                 },
               ),
             );

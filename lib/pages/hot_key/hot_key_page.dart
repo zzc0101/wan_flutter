@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:wan_flutter/common_ui/web/webview_page.dart';
+import 'package:wan_flutter/common_ui/web/webview_widget.dart';
 import 'package:wan_flutter/pages/hot_key/hot_key_vm.dart';
 import 'package:wan_flutter/pages/search/search_page.dart';
-import 'package:wan_flutter/pages/web_view_page.dart';
 import 'package:wan_flutter/repository/datas/common_website_data.dart';
 import 'package:wan_flutter/repository/datas/search_hot_keys_data.dart';
 import 'package:wan_flutter/route/route_utils.dart';
-import 'package:wan_flutter/route/routest.dart';
 
 class HotKeyPage extends StatefulWidget {
   @override
@@ -16,6 +16,9 @@ class HotKeyPage extends StatefulWidget {
     return _TabPageState();
   }
 }
+
+// 常用网站item回调
+typedef WebsiteClick = Function(String name, String link);
 
 class _TabPageState extends State<HotKeyPage> {
   HotKeyViewModel viewModel = HotKeyViewModel();
@@ -106,8 +109,16 @@ class _TabPageState extends State<HotKeyPage> {
                     return _gridView(
                       true,
                       websiteList: vm.websiteList,
-                      itemTap: (value) {
-                        RouteUtils.push(context, WebViewPage(title: "常用网站列表"));
+                      website: (name, link) {
+                        RouteUtils.push(
+                          context,
+                          WebViewPage(
+                            loadResource: link,
+                            webViewType: WebViewType.URL,
+                            showTitle: true,
+                            title: name,
+                          ),
+                        );
                       },
                     );
                   },
@@ -125,6 +136,7 @@ class _TabPageState extends State<HotKeyPage> {
     List<CommonWebsiteData>? websiteList,
     List<SearchHotKeysData>? keyList,
     ValueChanged<String>? itemTap,
+    WebsiteClick? website,
   }) {
     return Container(
       margin: EdgeInsets.only(top: 20.h),
@@ -143,10 +155,11 @@ class _TabPageState extends State<HotKeyPage> {
         ),
         itemBuilder: (context, index) {
           if (isWebsite == true) {
+            // 常用网站
             return _item(
               name: websiteList?[index].name,
-              itemTap: itemTap,
               link: websiteList?[index].link,
+              website: website,
             );
           } else {
             return _item(name: keyList?[index].name, itemTap: itemTap);
@@ -160,11 +173,16 @@ class _TabPageState extends State<HotKeyPage> {
     );
   }
 
-  Widget _item({String? name, ValueChanged<String>? itemTap, String? link}) {
+  Widget _item({
+    String? name,
+    ValueChanged<String>? itemTap,
+    String? link,
+    WebsiteClick? website,
+  }) {
     return GestureDetector(
       onTap: () {
         if (link != null) {
-          itemTap?.call(link);
+          website?.call(name ?? "", link);
         } else {
           itemTap?.call(name ?? "");
         }

@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:wan_flutter/common_ui/loading.dart';
 import 'package:wan_flutter/common_ui/smart_refresh/smart_refresh_widget.dart';
+import 'package:wan_flutter/common_ui/web/webview_page.dart';
+import 'package:wan_flutter/common_ui/web/webview_widget.dart';
 import 'package:wan_flutter/pages/home/home_vm.dart';
 import 'package:wan_flutter/repository/datas/home_list_data.dart';
 import 'package:wan_flutter/route/route_utils.dart';
@@ -97,12 +99,25 @@ class _HomePageState extends State<HomePage> {
           height: 150.h,
           child: Swiper(
             itemBuilder: (context, index) {
-              return Container(
-                width: double.infinity,
-                color: Colors.lightBlue,
-                child: Image.network(
-                  vm.bannerList?[index]?.imagePath ?? '',
-                  fit: BoxFit.fill,
+              return GestureDetector(
+                onTap: () {
+                  RouteUtils.push(
+                    context,
+                    WebViewPage(
+                      loadResource: vm.bannerList?[index]?.url ?? "",
+                      webViewType: WebViewType.URL,
+                      showTitle: true,
+                      title: vm.bannerList?[index]?.title,
+                    ),
+                  );
+                },
+                child: Container(
+                  width: double.infinity,
+                  color: Colors.lightBlue,
+                  child: Image.network(
+                    vm.bannerList?[index]?.imagePath ?? '',
+                    fit: BoxFit.fill,
+                  ),
                 ),
               );
             },
@@ -125,10 +140,19 @@ class _HomePageState extends State<HomePage> {
         // 使用工具类进行跳转
         // RouteUtils.push(context, WebViewPage(title: '首页跳转过来的'));
         // 跳转带入参数
-        RouteUtils.pushForNamed(
+        // RouteUtils.pushForNamed(
+        //   context,
+        //   RoutePath.webViewPage,
+        //   arguments: {'name', '使用路由传值'},
+        // );
+        RouteUtils.push(
           context,
-          RoutePath.webViewPage,
-          arguments: {'name', '使用路由传值'},
+          WebViewPage(
+            loadResource: item?.link ?? "",
+            webViewType: WebViewType.URL,
+            showTitle: true,
+            title: item?.title,
+          ),
         );
         // 路由跳转方式如下
         // Navigator.pushNamed(context, RoutePath.webViewPage);

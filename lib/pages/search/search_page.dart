@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:wan_flutter/common_ui/web/webview_page.dart';
+import 'package:wan_flutter/common_ui/web/webview_widget.dart';
 import 'package:wan_flutter/pages/search/search_vm.dart';
 import 'package:wan_flutter/route/route_utils.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -64,10 +66,17 @@ class _SearchPageState extends State<SearchPage> {
                     child: ListView.builder(
                       itemCount: vm.searchList?.length,
                       itemBuilder: (context, index) {
-                        return _listItem(
-                          vm.searchList?[index].title ?? "",
-                          () {},
-                        );
+                        return _listItem(vm.searchList?[index].title ?? "", () {
+                          RouteUtils.push(
+                            context,
+                            WebViewPage(
+                              loadResource: vm.searchList?[index].link ?? "",
+                              webViewType: WebViewType.URL,
+                              showTitle: true,
+                              title: vm.searchList?[index].title ?? "",
+                            ),
+                          );
+                        });
                       },
                     ),
                   );
@@ -85,7 +94,9 @@ class _SearchPageState extends State<SearchPage> {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(width: 1.r, color: Colors.black12)),
+          border: Border(
+            bottom: BorderSide(width: 1.r, color: Colors.black12),
+          ),
         ),
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
         child: Html(

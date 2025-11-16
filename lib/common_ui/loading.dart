@@ -7,7 +7,7 @@ class Loading {
 
   Loading._();
 
-  static Future showLoading() async {
+  static Future showLoading({Duration? duration}) async {
     showToastWidget(
       Container(
         color: Colors.transparent,
@@ -27,7 +27,7 @@ class Loading {
         ),
       ),
       handleTouch: true,
-      duration: const Duration(days: 1),
+      duration: duration ?? const Duration(days:  1),
     );
   }
 
